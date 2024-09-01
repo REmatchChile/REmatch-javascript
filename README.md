@@ -25,24 +25,26 @@ import initREmatch from 'rematch-javascript';
 
 Make the `initREmatch` function available globally with:
 
+The IIFE versions
+
 ```html
 <!-- Direct reference non-minified -->
-<script src="./lib/browser/rematch-javascript"></script>
+<script src="./lib/browser/rematch.iife.js"></script>
 <!-- Direct reference minified -->
-<script src="./lib/browser/rematch.min.js"></script>
+<script src="./lib/browser/rematch.iife.min.js"></script>
 
 <!-- unpkg CDN non-minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.iife.js"></script>
 <!-- unpkg CDN minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.min.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.iife.min.js"></script>
 
 <!-- jsDelivr CDN non-minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.iife.js"></script>
 <!-- jsDelivr CDN minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.min.iife.js"></script>
 ```
 
-Or use the ESM versions
+The ESM versions
 
 ```html
 <script type="module">
@@ -59,6 +61,25 @@ Or use the ESM versions
   // jsDelivr CDN minified
   import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.esm.min.js';
 </script>
+```
+
+The UMD versions
+
+```html
+<!-- Direct reference non-minified -->
+<script src="./lib/browser/rematch.umd.js"></script>
+<!-- Direct reference minified -->
+<script src="./lib/browser/rematch.umd.min.js"></script>
+
+<!-- unpkg CDN non-minified -->
+<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.umd.js"></script>
+<!-- unpkg CDN minified -->
+<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.umd.min.js"></script>
+
+<!-- jsDelivr CDN non-minified -->
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.umd.js"></script>
+<!-- jsDelivr CDN minified -->
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.umd.min.js"></script>
 ```
 
 ## Usage

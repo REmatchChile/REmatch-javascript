@@ -8,12 +8,11 @@
     "url": "https://github.com/REmatchChile/REmatch-javascript/issues"
   },
   "homepage": "https://github.com/REmatchChile/REmatch-javascript#readme",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "JavaScript bindings for REmatch, an information extraction focused regex library that uses constant delay algoirthms.",
   "author": "Vicente Calisto",
   "license": "MIT",
   "main": "lib/index.js",
-  "browser": "lib/index.js",
   "files": [
     "lib/",
     "LICENSE",
@@ -21,10 +20,10 @@
     "package.json"
   ],
   "scripts": {
-    "build": "npm run clean:build && babel src --out-dir lib",
-    "rollup": "rollup -c --bundleConfigAsCjs",
+    "build:old": "npm run clean:build && babel src --out-dir lib",
+    "build": "npm run clean:build && rollup -c --bundleConfigAsCjs",
     "test": "jest --verbose",
-    "prepublishOnly": "npm run build && npm run test && npm run rollup",
+    "prepublishOnly": "npm run build && npm run test",
     "clean:build": "rimraf lib/"
   },
   "keywords": [
@@ -51,6 +50,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "rimraf": "^6.0.1",
     "rollup": "^4.21.1",
-    "rollup-plugin-node-builtins": "^2.1.2"
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-polyfill-node": "^0.13.0"
   }
 }

@@ -114,7 +114,3 @@ matchIterator.free();
 ```
 
 As you notice in the previous snippet, due the lack of garbage collection in JavaScript, the bindings **should be explicitly freed** when you are done with them. Otherwise, it will lead to memory leaks.
-
-## Usage Webpack
-
-One issue that you may encounter is that if you are using `REmatch-javascript` with `Webpack`, you may need to just ignore the polyfill for `module`, by setting:`resolve.fallback.module` to `false`. The rest should be fine.

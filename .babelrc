@@ -1,0 +1,38 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "node": "current"
+                },
+                "modules": "commonjs"
+            }
+        ]
+    ],
+    "plugins": [
+        "@babel/plugin-transform-runtime",
+        "babel-plugin-add-module-exports",
+        // [
+        //     "@babel/plugin-transform-modules-umd",
+        //     {
+        //         "exactGlobals": true,
+        //         "globals": {
+        //             "index": "AnimalApi"
+        //         }
+        //     }
+        // ],
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                [
+                    "babel-plugin-transform-import-meta",
+                    {
+                        "module": "ES6"
+                    }
+                ]
+            ]
+        }
+    }
+}

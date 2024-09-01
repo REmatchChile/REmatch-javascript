@@ -1,13 +1,13 @@
 {
-  "name": "rematch.js",
+  "name": "rematch-javascript",
   "repository": {
     "type": "git",
-    "url": "git://github.com/REmatchChile/REmatch.js.git"
+    "url": "git://github.com/REmatchChile/REmatch-javascript.git"
   },
   "bugs": {
-    "url": "https://github.com/REmatchChile/REmatch.js/issues"
+    "url": "https://github.com/REmatchChile/REmatch-javascript/issues"
   },
-  "homepage": "https://github.com/REmatchChile/REmatch.js#readme",
+  "homepage": "https://github.com/REmatchChile/REmatch-javascript#readme",
   "version": "1.0.0",
   "description": "JavaScript bindings for REmatch, an information extraction focused regex library that uses constant delay algoirthms.",
   "author": "Vicente Calisto",

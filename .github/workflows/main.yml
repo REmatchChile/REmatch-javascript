@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   build_and_publish:
-    name: Build REmatch.js package
+    name: Build REmatch-javascript package
     runs-on: ubuntu-latest
     permissions:
       contents: read

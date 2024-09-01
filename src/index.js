@@ -26,14 +26,25 @@ async function initREmatch() {
 }
 
 class REmatchInterface {
-  constructor(wasmModule, options) {
+  constructor(wasmModule) {
     this._wasmModule = wasmModule;
+    this._wasmModule.onAbort = () => {
+      console.error('REmatch instance aborted');
+    }
   }
 
   reql(pattern, flags = DEFAULT_QUERY_FLAGS) {
     if (flags.multiMatch) return new MultiQuery(pattern, flags, this._wasmModule);
 
     return new Query(pattern, flags, this._wasmModule);
+  }
+
+  getExceptionMessage(exception) {
+    return this._wasmModule.getExceptionMessage(exception);
+  }
+
+  setOnAbort(callback) {
+    this._wasmModule.onAbort = callback;
   }
 }
 
@@ -193,7 +204,7 @@ class MultiMatch {
     if (wasmSpans) {
       const res = _wasmVectorToArray(wasmSpans);
       wasmSpans.delete();
-      return res;
+      return res.map(([from, to]) => [Number(from), Number(to)]);
     }
 
     throw new Error("key must be number or string");

@@ -6,7 +6,7 @@ JavaScript bindings for REmatch, an information extraction focused regex library
 
 * [REmatch's Official Website](https://rematch.cl)
 * [GitHub repository](https://github.com/REmatchChile/REmatch-javascript)
-* [NPM package](https://www.npmjs.com/package/REmatch-javascript)
+* [NPM package](https://www.npmjs.com/package/rematch-javascript)
 * [Project Wiki](https://github.com/REmatchChile/REmatch/wiki)
 
 ## Installation - npm

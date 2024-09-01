@@ -29,19 +29,19 @@ The IIFE versions
 
 ```html
 <!-- Direct reference non-minified -->
-<script src="./lib/browser/rematch.iife.js"></script>
+<script src="./lib/rematch.iife.js"></script>
 <!-- Direct reference minified -->
-<script src="./lib/browser/rematch.iife.min.js"></script>
+<script src="./lib/rematch.iife.min.js"></script>
 
 <!-- unpkg CDN non-minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.iife.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.iife.js"></script>
 <!-- unpkg CDN minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.iife.min.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.iife.min.js"></script>
 
 <!-- jsDelivr CDN non-minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.iife.js"></script>
 <!-- jsDelivr CDN minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.min.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.min.iife.js"></script>
 ```
 
 The ESM versions
@@ -49,17 +49,17 @@ The ESM versions
 ```html
 <script type="module">
   // Direct reference non-minified
-  import initREmatch from './lib/browser/rematch.esm.js';
+  import initREmatch from './lib/rematch.esm.js';
   // Direct reference minified
-  import initREmatch from './lib/browser/rematch.esm.min.js';
+  import initREmatch from './lib/rematch.esm.min.js';
   // unpkg CDN non-minified
-  import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.esm.js';
+  import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/rematch.esm.js';
   // unpkg CDN minified
-  import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.esm.min.js';
+  import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/rematch.esm.min.js';
   // jsDelivr CDN non-minified
-  import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.esm.js';
+  import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.esm.js';
   // jsDelivr CDN minified
-  import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.esm.min.js';
+  import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.esm.min.js';
 </script>
 ```
 
@@ -67,19 +67,19 @@ The UMD versions
 
 ```html
 <!-- Direct reference non-minified -->
-<script src="./lib/browser/rematch.umd.js"></script>
+<script src="./lib/rematch.umd.js"></script>
 <!-- Direct reference minified -->
-<script src="./lib/browser/rematch.umd.min.js"></script>
+<script src="./lib/rematch.umd.min.js"></script>
 
 <!-- unpkg CDN non-minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.umd.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.umd.js"></script>
 <!-- unpkg CDN minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/browser/rematch.umd.min.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.umd.min.js"></script>
 
 <!-- jsDelivr CDN non-minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.umd.js"></script>
 <!-- jsDelivr CDN minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/browser/rematch.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.umd.min.js"></script>
 ```
 
 ## Usage

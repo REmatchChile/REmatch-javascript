@@ -16,11 +16,11 @@ describe("Entry point", () => {
 
     // Create a REQL query
     const query = REmatch.reql(pattern);
-
+    const spans = [];
     // Execute the query and show the matches
     const matchIterator = query.findIter(document);
     for (const match of matchIterator) {
-      console.log(`Match: ${match.toString()}`);
+      spans.push({ domain: match.span("domain") });
 
       // Current match will no longer be used
       match.free();

@@ -1,12 +1,5 @@
 module.exports = {
-  projects: [
-    {
-      displayName: "nodejs",
-      testEnvironment: "node",
-    },
-    {
-      displayName: "browser",
-      testEnvironment: "jsdom",
-    },
-  ],
+  rootDir: "./",
+  verbose: true,
+  // --experimental-vm-modules
 };

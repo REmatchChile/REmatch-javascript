@@ -23,63 +23,47 @@ import initREmatch from 'rematch-javascript';
 
 ## Installation - browser
 
-Make the `initREmatch` function available globally with:
-
-The IIFE versions
+Make the `initREmatch` function available globally in browsers with:
 
 ```html
 <!-- Direct reference non-minified -->
-<script src="./lib/rematch.iife.js"></script>
+<script src="./lib/index.umd.js"></script>
 <!-- Direct reference minified -->
-<script src="./lib/rematch.iife.min.js"></script>
+<script src="./lib/index.umd.min.js"></script>
 
 <!-- unpkg CDN non-minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.iife.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/index.umd.js"></script>
 <!-- unpkg CDN minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.iife.min.js"></script>
+<script src="https://unpkg.com/rematch-javascript@latest/lib/index.umd.min.js"></script>
 
 <!-- jsDelivr CDN non-minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/index.umd.js"></script>
 <!-- jsDelivr CDN minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.min.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/index.umd.min.js"></script>
 ```
 
-The ESM versions
+For ESM modules:
 
-```html
-<script type="module">
-  // Direct reference non-minified
-  import initREmatch from './lib/rematch.esm.js';
-  // Direct reference minified
-  import initREmatch from './lib/rematch.esm.min.js';
-  // unpkg CDN non-minified
-  import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/rematch.esm.js';
-  // unpkg CDN minified
-  import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/rematch.esm.min.js';
-  // jsDelivr CDN non-minified
-  import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.esm.js';
-  // jsDelivr CDN minified
-  import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.esm.min.js';
-</script>
+```javascript
+// Direct reference
+import initREmatch from './lib/index.esm.js';
+
+// unpkg CDN
+import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/index.esm.js';
+// jsDelivr CDN
+import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/index.esm.js';
 ```
 
-The UMD versions
+For CJS modules:
 
-```html
-<!-- Direct reference non-minified -->
-<script src="./lib/rematch.umd.js"></script>
-<!-- Direct reference minified -->
-<script src="./lib/rematch.umd.min.js"></script>
+```javascript
+// Direct reference
+const initREmatch = require('./lib/index.cjs');
 
-<!-- unpkg CDN non-minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.umd.js"></script>
-<!-- unpkg CDN minified -->
-<script src="https://unpkg.com/rematch-javascript@latest/lib/rematch.umd.min.js"></script>
-
-<!-- jsDelivr CDN non-minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.umd.js"></script>
-<!-- jsDelivr CDN minified -->
-<script src="https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/rematch.umd.min.js"></script>
+// unpkg CDN
+const initREmatch = require('https://unpkg.com/rematch-javascript@latest/lib/index.cjs');
+// jsDelivr CDN
+const initREmatch = require('https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/index.cjs');
 ```
 
 ## Usage
@@ -88,7 +72,7 @@ As said before, `REmatch-javascript` was built with emscripten, so it uses [WebA
 
 First you would need to load the REmatch module instance by importing the `initREmatch` function:
 
-```js
+```javascript
 // Create a REmatch module instance
 const REmatch = await initREmatch();
 
@@ -102,7 +86,7 @@ const query = REmatch.reql(pattern);
 // Execute the query and show the matches
 const matchIterator = query.findIter(document);
 for (const match of matchIterator) {
-  console.log(`Match: "${match.group("domain")}"`);
+  console.log(`Match: ${match.toString()}`);
 
   // Current match will no longer be used
   match.free();
@@ -114,3 +98,11 @@ matchIterator.free();
 ```
 
 As you notice in the previous snippet, due the lack of garbage collection in JavaScript, the bindings **should be explicitly freed** when you are done with them. Otherwise, it will lead to memory leaks.
+
+## Development
+
+If you want to update the emscripten bindings, first make sure that you have the [emscripten compiler](https://emscripten.org/) installed. Then, if you want to the latest REmatch, do the following steps:
+
+1. Update the REmatch's submodule (at `/REmatch`) with the latest version
+2. Build the emscripten bindings with `npm run build:bindings`
+3. Build the project with `npm run build`

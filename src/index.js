@@ -180,6 +180,13 @@ class Query {
     return this._cppQuery.check(document);
   }
 
+  variables() {
+    const cppVector = this._cppQuery.variables();
+    const res = _cppVectorToArray(cppVector);
+    cppVector.delete();
+    return res;
+  }
+
   free() {
     this._cppQuery.delete();
   }
@@ -299,6 +306,13 @@ class MultiQuery {
 
   check(document) {
     return this._cppMultiQuery.check(document);
+  }
+
+  variables() {
+    const cppVector = this._cppMultiQuery.variables();
+    const res = _cppVectorToArray(cppVector);
+    cppVector.delete();
+    return res;
   }
 
   free() {

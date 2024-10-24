@@ -1,4 +1,4 @@
-# REmatch-javascript: REmatch bindings for JavaScript (Browser)
+# REmatch-javascript: REmatch bindings for JavaScript
 
 JavaScript bindings for REmatch, an information extraction focused regex library that uses constant delay algoirthms.
 
@@ -21,7 +21,7 @@ Then you can import the REmatch initializer function with:
 import initREmatch from 'rematch-javascript';
 ```
 
-## Installation - browser
+## Installation
 
 Make the `initREmatch` function available globally in browsers with:
 
@@ -50,6 +50,7 @@ import initREmatch from './lib/index.esm.js';
 
 // unpkg CDN
 import initREmatch from 'https://unpkg.com/rematch-javascript@latest/lib/index.esm.js';
+
 // jsDelivr CDN
 import initREmatch from 'https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/index.esm.js';
 ```
@@ -62,6 +63,7 @@ const initREmatch = require('./lib/index.cjs');
 
 // unpkg CDN
 const initREmatch = require('https://unpkg.com/rematch-javascript@latest/lib/index.cjs');
+
 // jsDelivr CDN
 const initREmatch = require('https://cdn.jsdelivr.net/npm/rematch-javascript@latest/lib/index.cjs');
 ```

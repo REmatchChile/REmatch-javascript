@@ -16,4 +16,5 @@ const command = `emcmake cmake -B${buildDir} -DCMAKE_BUILD_TYPE=Release && cmake
 execSync(command, { cwd: REmatchDir, stdio: "inherit" });
 
 // Move the emscripten bindings to src/
+fs.rmSync(path.join(srcDir, "rematch-bindings.js"), { force: true });
 fs.copyFileSync(path.join(buildDir, "bin/rematch-bindings.js"), path.join(srcDir, "rematch-bindings.js"));

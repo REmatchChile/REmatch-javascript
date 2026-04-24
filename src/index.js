@@ -11,6 +11,7 @@ class REmatchInstance {
     this.Flags = this._wasmModule.cppFlags;
     this.DEFAULT_MAX_MEMPOOL_DUPLICATIONS = this._wasmModule.DEFAULT_MAX_MEMPOOL_DUPLICATIONS;
     this.DEFAULT_MAX_DETERMINISTIC_STATES = this._wasmModule.DEFAULT_MAX_DETERMINISTIC_STATES;
+    this.DEFAULT_STREAM_BUFFER_SIZE = this._wasmModule.DEFAULT_STREAM_BUFFER_SIZE;
     this._wasmModule.onAbort = () => {
       this.onAbort();
     };
@@ -20,9 +21,10 @@ class REmatchInstance {
     pattern,
     flags = this.Flags.NONE,
     max_mempool_duplications = this.DEFAULT_MAX_MEMPOOL_DUPLICATIONS,
-    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES
+    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES,
+    buffer_size = this.DEFAULT_STREAM_BUFFER_SIZE
   ) {
-    const cppQuery = this._wasmModule.cppReql(pattern, flags, max_mempool_duplications, max_deterministic_states);
+    const cppQuery = this._wasmModule.cppReql(pattern, flags, max_mempool_duplications, max_deterministic_states, buffer_size);
     return new Query(cppQuery);
   }
 
@@ -30,13 +32,15 @@ class REmatchInstance {
     pattern,
     flags = this.Flags.NONE,
     max_mempool_duplications = this.DEFAULT_MAX_MEMPOOL_DUPLICATIONS,
-    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES
+    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES,
+    buffer_size = this.DEFAULT_STREAM_BUFFER_SIZE
   ) {
     const cppMultiQuery = this._wasmModule.cppMultiReql(
       pattern,
       flags,
       max_mempool_duplications,
-      max_deterministic_states
+      max_deterministic_states,
+      buffer_size
     );
     return new MultiQuery(cppMultiQuery);
   }

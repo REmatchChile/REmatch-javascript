@@ -55,6 +55,10 @@ class REmatchInstance {
     return this._wasmModule.getExceptionMessage(exception);
   }
 
+  decrementExceptionRefcount(exception) {
+    return this._wasmModule.decrementExceptionRefcount(exception);
+  }
+
   onAbort() {
     console.error("REmatch instance aborted!");
   }

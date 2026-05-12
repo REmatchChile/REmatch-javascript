@@ -5,12 +5,19 @@ async function initREmatch() {
   return new REmatchInstance(wasmModule);
 }
 
+class _Reader {
+  constructor(cppReader) {
+    this._cppReader = cppReader;
+  }
+}
+
 class REmatchInstance {
   constructor(wasmModule) {
     this._wasmModule = wasmModule;
     this.Flags = this._wasmModule.cppFlags;
     this.DEFAULT_MAX_MEMPOOL_DUPLICATIONS = this._wasmModule.DEFAULT_MAX_MEMPOOL_DUPLICATIONS;
     this.DEFAULT_MAX_DETERMINISTIC_STATES = this._wasmModule.DEFAULT_MAX_DETERMINISTIC_STATES;
+    this.DEFAULT_STREAM_BUFFER_SIZE = this._wasmModule.DEFAULT_STREAM_BUFFER_SIZE;
     this._wasmModule.onAbort = () => {
       this.onAbort();
     };
@@ -20,9 +27,10 @@ class REmatchInstance {
     pattern,
     flags = this.Flags.NONE,
     max_mempool_duplications = this.DEFAULT_MAX_MEMPOOL_DUPLICATIONS,
-    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES
+    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES,
+    buffer_size = this.DEFAULT_STREAM_BUFFER_SIZE
   ) {
-    const cppQuery = this._wasmModule.cppReql(pattern, flags, max_mempool_duplications, max_deterministic_states);
+    const cppQuery = this._wasmModule.cppReql(pattern, flags, max_mempool_duplications, max_deterministic_states, buffer_size);
     return new Query(cppQuery);
   }
 
@@ -30,13 +38,15 @@ class REmatchInstance {
     pattern,
     flags = this.Flags.NONE,
     max_mempool_duplications = this.DEFAULT_MAX_MEMPOOL_DUPLICATIONS,
-    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES
+    max_deterministic_states = this.DEFAULT_MAX_DETERMINISTIC_STATES,
+    buffer_size = this.DEFAULT_STREAM_BUFFER_SIZE
   ) {
     const cppMultiQuery = this._wasmModule.cppMultiReql(
       pattern,
       flags,
       max_mempool_duplications,
-      max_deterministic_states
+      max_deterministic_states,
+      buffer_size
     );
     return new MultiQuery(cppMultiQuery);
   }
@@ -45,8 +55,17 @@ class REmatchInstance {
     return this._wasmModule.getExceptionMessage(exception);
   }
 
+  decrementExceptionRefcount(exception) {
+    return this._wasmModule.decrementExceptionRefcount(exception);
+  }
+
   onAbort() {
     console.error("REmatch instance aborted!");
+  }
+
+  Reader(path) {
+    const wrapper = new this._wasmModule.cppReaderWrapper(path);
+    return new _Reader(wrapper);
   }
 }
 
@@ -157,27 +176,62 @@ class Query {
   }
 
   findOne(document) {
-    const cppMatch = this._cppQuery.findone(document);
-    return new Match(cppMatch);
+
+    if (typeof document === "string") {
+      const cppMatch = this._cppQuery.findone(document);
+      return new Match(cppMatch);
+    } else if (document instanceof _Reader) {
+      const cppMatch = this._cppQuery.findoneStream(document._cppReader);
+      return new Match(cppMatch);
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   findMany(document, limit) {
-    const cppMatches = this._cppQuery.findmany(document, limit);
-    return _cppVectorToArray(cppMatches).map((cppMatch) => new Match(cppMatch));
+    if (typeof document === "string") {
+      const cppMatches = this._cppQuery.findmany(document, limit);
+      return _cppVectorToArray(cppMatches).map((cppMatch) => new Match(cppMatch));
+    } else if (document instanceof _Reader) {
+      const cppMatches = this._cppQuery.findmanyStream(document._cppReader, limit);
+      return _cppVectorToArray(cppMatches).map((cppMatch) => new Match(cppMatch));
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   findAll(document) {
-    const cppMatches = this._cppQuery.findall(document);
-    return _cppVectorToArray(cppMatches).map((cppMatch) => new Match(cppMatch));
+    if (typeof document === "string") {
+      const cppMatches = this._cppQuery.findall(document);
+      return _cppVectorToArray(cppMatches).map((cppMatch) => new Match(cppMatch));
+    } else if (document instanceof _Reader) {
+      const cppMatches = this._cppQuery.findallStream(document._cppReader);
+      return _cppVectorToArray(cppMatches).map((cppMatch) => new Match(cppMatch));
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   findIter(document) {
-    const cppMatchGenerator = this._cppQuery.finditer(document);
-    return new MatchGenerator(cppMatchGenerator);
+    if (typeof document === "string") {
+      const cppMatchGenerator = this._cppQuery.finditer(document);
+      return new MatchGenerator(cppMatchGenerator);
+    } else if (document instanceof _Reader) {
+      const cppMatchGenerator = this._cppQuery.finditerStream(document._cppReader);
+      return new MatchGenerator(cppMatchGenerator);
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   check(document) {
-    return this._cppQuery.check(document);
+    if (typeof document === "string") {
+      return this._cppQuery.check(document);
+    } else if (document instanceof _Reader) {
+      return this._cppQuery.checkStream(document._cppReader);
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   variables() {
@@ -285,27 +339,61 @@ class MultiQuery {
   }
 
   findOne(document) {
-    const cppMultiMatch = this._cppMultiQuery.findone(document);
-    return new MultiMatch(cppMultiMatch);
+    if (typeof document === "string") {
+      const cppMultiMatch = this._cppMultiQuery.findone(document);
+      return new MultiMatch(cppMultiMatch);
+    } else if (document instanceof _Reader) {
+      const cppMultiMatch = this._cppMultiQuery.findoneStream(document._cppReader);
+      return new MultiMatch(cppMultiMatch);
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   findMany(document, limit) {
-    const cppMultiMatches = this._cppMultiQuery.findmany(document, limit);
-    return _cppVectorToArray(cppMultiMatches).map((cppMultiMatch) => new MultiMatch(cppMultiMatch));
+    if (typeof document === "string") {
+      const cppMultiMatches = this._cppMultiQuery.findmany(document, limit);
+      return _cppVectorToArray(cppMultiMatches).map((cppMultiMatch) => new MultiMatch(cppMultiMatch));
+    } else if (document instanceof _Reader) {
+      const cppMultiMatches = this._cppMultiQuery.findmanyStream(document._cppReader, limit);
+      return _cppVectorToArray(cppMultiMatches).map((cppMultiMatch) => new MultiMatch(cppMultiMatch));
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   findAll(document) {
-    const cppMultiMatches = this._cppMultiQuery.findall(document);
-    return _cppVectorToArray(cppMultiMatches).map((cppMultiMatch) => new MultiMatch(cppMultiMatch));
+    if (typeof document === "string") {
+      const cppMultiMatches = this._cppMultiQuery.findall(document);
+      return _cppVectorToArray(cppMultiMatches).map((cppMultiMatch) => new MultiMatch(cppMultiMatch));
+    } else if (document instanceof _Reader) {
+    } else {
+      const cppMultiMatches = this._cppMultiQuery.findallStream(document._cppReader);
+      return _cppVectorToArray(cppMultiMatches).map((cppMultiMatch) => new MultiMatch(cppMultiMatch));
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   findIter(document) {
-    const cppMultiMatchGenerator = this._cppMultiQuery.finditer(document);
-    return new MultiMatchGenerator(cppMultiMatchGenerator);
+    if (typeof document === "string") {
+      const cppMultiMatchGenerator = this._cppMultiQuery.finditer(document);
+      return new MultiMatchGenerator(cppMultiMatchGenerator);
+    } else if (document instanceof _Reader) {
+      const cppMultiMatchGenerator = this._cppMultiQuery.finditerStream(document._cppReader);
+      return new MultiMatchGenerator(cppMultiMatchGenerator);
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   check(document) {
-    return this._cppMultiQuery.check(document);
+    if (typeof document === "string") {
+      return this._cppMultiQuery.check(document);
+    } else if (document instanceof _Reader) {
+      return this._cppMultiQuery.checkStream(document._cppReader);
+    } else {
+      throw new Error("The document must be String or Reader")
+    }
   }
 
   variables() {

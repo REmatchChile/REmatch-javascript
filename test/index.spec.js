@@ -164,4 +164,31 @@ describe("Entry point", () => {
     it.free();
     query.free();
   });
+
+  it("Reader", async () => {
+    const REmatch = await initREmatch();
+    REmatch._wasmModule.FS.writeFile("/document.txt", "Hello there");
+    const path = "/document.txt";
+    const pattern = String.raw`!x{.e}`;
+    const query = REmatch.reql(pattern);
+
+    const reader = REmatch.Reader(path);
+    const it = query.findIter(reader);
+
+    const spans = [];
+    for (const match of it) {
+      const span = match.span(0);
+      spans.push(span);
+      match.free();
+    }
+
+    expect(spans).toEqual([
+      [0, 2],
+      [7, 9],
+      [9, 11],
+    ]);
+
+    it.free();
+    query.free();
+  });
 });
